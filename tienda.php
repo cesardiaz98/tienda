@@ -36,7 +36,7 @@ if (isset($_GET['mensaje'])){
 <body>
     <header>
         <div>
-            <a href="index.html" id="logo">
+            <a href="tienda.php" id="logo">
                 <img src="imagenes/logo.png" alt="Logotipo tienda" />
             </a>
         </div>
@@ -52,7 +52,7 @@ if (isset($_GET['mensaje'])){
     </header>
     <nav>
         <a href="tienda.php" id="inicio">Inicio</a>
-        <a href="productos.php" id="productos">Productos</a>
+        <!--<a href="productos.php" id="productos">Productos</a>-->
         <a href="nosotros.html" id="nosotros">Acerca de nosotros</a>
     </nav>
     <main>

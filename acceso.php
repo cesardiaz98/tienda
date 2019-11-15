@@ -1,7 +1,4 @@
-<?php
-
-    $datosCorrectos=true;
-    
+<?php    
     //Comprobación usuario
     $usuario="";
     if(isset($_POST['usuario'])){
@@ -50,7 +47,7 @@
 	$http="Location: tienda.php?mensaje=".urlencode("Usuario o contraseña incorrecto");
 	header($http);
 	exit;
-    } 
+    }
 
 ?>
 <!DOCTYPE html>
@@ -67,7 +64,7 @@
     <body>
     <header>
         <div>
-            <a href="index.html" id="logo">
+            <a href="tienda.php" id="logo">
                 <img src="imagenes/logo.png" alt="Logotipo tienda" />
             </a>
         </div>

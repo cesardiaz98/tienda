@@ -1,5 +1,28 @@
-<!DOCTYPE html>
+<?php
+    //Seguridad
+    include "../../seguridad/tema03/datosBDTienda.php";
 
+    //Vamos a conectarnos a la base de datos
+    $canal = @mysqli_connect(IP,USUARIO,CLAVE,BD);
+    if (!$canal){
+        echo "Ha ocurrido un error: ".mysqli_connect_errno()." ".mysqli_connect_error()."<br />";
+        exit;
+    }
+    mysqli_set_charset($canal, "utf8");
+    
+    $sql="select nombreProducto, imagen, descripcion, precio, cantidad from productos";
+    
+    $consulta = mysqli_prepare($canal, $sql);
+    if (!$consulta){
+        echo "Ha ocurrido un error: ".mysqli_errno($canal)." ".mysqli_error($canal)."<br />";
+        exit; 
+    }
+    
+    mysqli_stmt_execute($consulta);
+    mysqli_stmt_bind_result($consulta, $nombreProducto, $imagen, $descripcion, $precio, $cantidad);
+?>
+
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -16,16 +39,12 @@
     <body>
     <header>
         <div>
-            <a href="index.html" id="logo">
+            <a href="tienda.php" id="logo">
                 <img src="imagenes/logo.png" alt="Logotipo tienda" />
             </a>
         </div>
-        <div id="formulario">
-            <form action="acceso.php" method="post">
-                <label>Usuario:</label><input type="text" name="usuario" id="usuario" required="required">
-                <label>Contraseña:</label><input type="password" id="contrasena" required="required">
-                <input type="submit" value="Entrar">
-            </form>
+        <div>
+        
         </div>
 
     </header>
@@ -35,7 +54,31 @@
         <a href="nosotros.html" id="nosotros">Acerca de nosotros</a>
     </nav>
     <main>
-        <h1>Productos</h1>
+        <div>
+            <h1>Productos</h1>
+        </div>
+        
+        <article>
+            <table>
+                <tr>
+                    <th>Nombre producto</th>
+                    <th>Imagen</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
+                <?php
+                    while (mysqli_stmt_fetch($consulta)){
+                        echo "<tr>";
+                        echo "<td>$nombreProducto</td><td><img src='".$imagen."'/><td>$descripcion</td><td>".$precio."€</td>";
+                        echo "</tr>";
+                        
+                    }
+                    mysqli_stmt_close($consulta);
+                    unset($consulta);
+                ?>
+            </table>
+        </article>
     </main>
     <footer>
         <div>
