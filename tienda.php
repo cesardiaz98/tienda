@@ -1,58 +1,78 @@
-<?php
-//Comprobamos el usuario
-$usuario="";
-if (isset($_GET['usuario'])){
-    $usuario= strip_tags(trim($_GET['usuario']));
-}
-//Comprobamos la contraseña
-$password="";
-if (isset($_GET['password'])){
-	$password=strip_tags(trim($_GET['password']));
-}
-
-//Mensaje en caso de error
-$mensaje="";
-if (isset($_GET['mensaje'])){
-	$mensaje=strip_tags(trim($_GET['mensaje']));
-}
-
-
+<?php    
+    //Comprobación usuario
+    $usuario="";
+    if(isset($_POST['usuario'])){
+        $usuario=strip_tags(trim($_POST['usuario']));
+    }
+    //Comprobación contraseña
+    $password="";
+    if(isset($_POST['password'])){
+        $password=strip_tags(trim($_POST['password']));
+    }
+    
+    if (empty($usuario) or empty($password)){
+        $http="Location: login.php?mensaje=".urlencode("Alguno de los datos están vacíos");
+        header($http);
+        exit;
+    }
+    //Seguridad
+    include "../../seguridad/tema03/datosBDTienda.php";
+    //Vamos a conectarnos a la base de datos
+    $canal = @mysqli_connect(IP,USUARIO,CLAVE,BD);
+    if (!$canal){
+        echo "Ha ocurrido un error: ".mysqli_connect_errno()." ".mysqli_connect_error()."<br />";
+        exit;
+    }
+    mysqli_set_charset($canal, "utf8");
+    $sql = "select usuario, password from usuarios where usuario=? and password=?";
+    $consulta = mysqli_prepare($canal, $sql);
+    if(!$consulta){
+        echo "Ha ocurrido un error: ".mysqli_errno($canal)." ".mysqli_error($canal)."<br/>";
+    }
+    
+    //Comprobar si existe el usuario y la contraseña de la base de datos, se la pasamos a la sentencia sql
+    mysqli_stmt_bind_param($consulta, "ss", $usuario,$password);
+    
+    
+    mysqli_stmt_execute($consulta);
+    mysqli_stmt_bind_result($consulta, $usuario, $password);
+    
+    mysqli_stmt_store_result($consulta);
+    
+    //Comprueba el número de filas que la consulta ha encontrado
+    $n=mysqli_stmt_num_rows($consulta);
+    if ($n!=1){
+	$http="Location: login.php?mensaje=".urlencode("Usuario o contraseña incorrecto");
+	header($http);
+	exit;
+    }
 ?>
-
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Paginas responsive-->
-    <meta name="author" content="Cesar Diaz">
-    <meta name="keywords" content="HTML, XHTML">
-    <link rel="stylesheet" type="text/css" href="estilos.css">
-    <title>Tienda</title>
-    
-</head>
-
-<body>
+    <head>
+        <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--Paginas responsive-->
+        <meta name="author" content="Cesar Diaz">
+        <meta name="keywords" content="HTML, XHTML">
+        <link rel="stylesheet" type="text/css" href="estilos.css">
+        <title>Tienda</title>
+    </head>
+    <body>
     <header>
         <div>
             <a href="tienda.php" id="logo">
                 <img src="imagenes/logo.png" alt="Logotipo tienda" />
             </a>
         </div>
-        <p><span class="error"><?="$mensaje"?></p></span>
-        <div id="formulario">
-            <form action="acceso.php" method="post">
-                <label>Usuario:</label><input type="text" name="usuario" value="<?=$usuario?>" id="usuario">
-                <label>Contraseña:</label><input type="password" name="password" id="contrasena">
-                <input type="submit" value="Entrar">
-            </form>
+        <div>
+            <h2>Bienvenido: <?=$usuario?></h2>
         </div>
 
     </header>
     <nav>
         <a href="tienda.php" id="inicio">Inicio</a>
-        <!--<a href="productos.php" id="productos">Productos</a>-->
+        <a href="productos.php" id="productos">Productos</a>
         <a href="nosotros.html" id="nosotros">Acerca de nosotros</a>
     </nav>
     <main>

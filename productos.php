@@ -20,6 +20,8 @@
     
     mysqli_stmt_execute($consulta);
     mysqli_stmt_bind_result($consulta, $nombreProducto, $imagen, $descripcion, $precio, $cantidad);
+    
+
 ?>
 
 <!DOCTYPE html>
@@ -42,9 +44,6 @@
             <a href="tienda.php" id="logo">
                 <img src="imagenes/logo.png" alt="Logotipo tienda" />
             </a>
-        </div>
-        <div>
-        
         </div>
 
     </header>

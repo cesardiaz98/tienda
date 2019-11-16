@@ -125,7 +125,6 @@ img{
 }
 table{
     border: 1px ;
-    
 }
 tr:nth-child(even){
     background-color: lightgrey;
