@@ -69,14 +69,18 @@
                 <?php
                     while (mysqli_stmt_fetch($consulta)){
                         echo "<tr>";
-                        echo "<td>$nombreProducto</td><td><img src='".$imagen."'/><td>$descripcion</td><td>".$precio."€</td>";
+                        echo "<td>$nombreProducto</td><td><img src='".$imagen."'/><td>$descripcion</td><td>".$precio."€</td><td><input type='number'></td>";
                         echo "</tr>";
                         
                     }
                     mysqli_stmt_close($consulta);
                     unset($consulta);
                 ?>
+                
             </table>
+            <form action="pedido.php">
+                <input type="submit" value="Añadir al carrito" onclick="confirm ('¿Desea añadirlo al carrito?')">
+            </form>
         </article>
     </main>
     <footer>

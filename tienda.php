@@ -1,51 +1,64 @@
 <?php    
+    $validado = false;
     //Comprobación usuario
-    $usuario="";
-    if(isset($_POST['usuario'])){
-        $usuario=strip_tags(trim($_POST['usuario']));
-    }
-    //Comprobación contraseña
-    $password="";
-    if(isset($_POST['password'])){
-        $password=strip_tags(trim($_POST['password']));
+    if ($validado == false){
+            $usuario="";
+        if(isset($_POST['usuario'])){
+            $usuario=strip_tags(trim($_POST['usuario']));
+        }
+        //Comprobación contraseña
+        $password="";
+        if(isset($_POST['password'])){
+            $password=strip_tags(trim($_POST['password']));
+        } 
     }
     
-    if (empty($usuario) or empty($password)){
-        $http="Location: login.php?mensaje=".urlencode("Alguno de los datos están vacíos");
-        header($http);
-        exit;
-    }
+   if ($validado == true){
     //Seguridad
-    include "../../seguridad/tema03/datosBDTienda.php";
-    //Vamos a conectarnos a la base de datos
-    $canal = @mysqli_connect(IP,USUARIO,CLAVE,BD);
-    if (!$canal){
-        echo "Ha ocurrido un error: ".mysqli_connect_errno()." ".mysqli_connect_error()."<br />";
-        exit;
+        include "../../seguridad/tema03/datosBDTienda.php";
+        //Vamos a conectarnos a la base de datos
+        $canal = @mysqli_connect(IP,USUARIO,CLAVE,BD);
+        if (!$canal){
+            echo "Ha ocurrido un error: ".mysqli_connect_errno()." ".mysqli_connect_error()."<br />";
+            exit;
+        }
+        mysqli_set_charset($canal, "utf8");
+        $sql = "select usuario, password from usuarios where usuario=? and password=?";
+        $consulta = mysqli_prepare($canal, $sql);
+        if(!$consulta){
+            echo "Ha ocurrido un error: ".mysqli_errno($canal)." ".mysqli_error($canal)."<br/>";
+        }
+
+        //Comprobar si existe el usuario y la contraseña de la base de datos, se la pasamos a la sentencia sql
+        mysqli_stmt_bind_param($consulta, "ss", $usuario,$password);
+
+
+        mysqli_stmt_execute($consulta);
+        mysqli_stmt_bind_result($consulta, $usuario, $password);
+
+        mysqli_stmt_store_result($consulta);
+
+        //Comprueba el número de filas que la consulta ha encontrado
+        $n=mysqli_stmt_num_rows($consulta);
+        if ($n!=1){
+            
+            $http="Location: login.php?mensaje=".urlencode("Usuario o contraseña incorrecto");
+            $http.="&validado=".urlencode("false");
+            header($http);
+            exit;
+        } else if (empty($usuario) or empty($password)){
+         
+            $http="Location: login.php?mensaje=".urlencode("Alguno de los datos están vacíos");
+            $http.="&validado=".urlencode("false");
+            header($http);
+            exit;
+        } 
+        $http="Location: tienda.php?validado=true&usuario=$usuario";
+        header($http);
+        
     }
-    mysqli_set_charset($canal, "utf8");
-    $sql = "select usuario, password from usuarios where usuario=? and password=?";
-    $consulta = mysqli_prepare($canal, $sql);
-    if(!$consulta){
-        echo "Ha ocurrido un error: ".mysqli_errno($canal)." ".mysqli_error($canal)."<br/>";
-    }
+     
     
-    //Comprobar si existe el usuario y la contraseña de la base de datos, se la pasamos a la sentencia sql
-    mysqli_stmt_bind_param($consulta, "ss", $usuario,$password);
-    
-    
-    mysqli_stmt_execute($consulta);
-    mysqli_stmt_bind_result($consulta, $usuario, $password);
-    
-    mysqli_stmt_store_result($consulta);
-    
-    //Comprueba el número de filas que la consulta ha encontrado
-    $n=mysqli_stmt_num_rows($consulta);
-    if ($n!=1){
-	$http="Location: login.php?mensaje=".urlencode("Usuario o contraseña incorrecto");
-	header($http);
-	exit;
-    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -71,7 +84,7 @@
 
     </header>
     <nav>
-        <a href="tienda.php" id="inicio">Inicio</a>
+        <a href="tienda.php?validado=true&usuario="<?=$usuario?> id="inicio">Inicio</a>
         <a href="productos.php" id="productos">Productos</a>
         <a href="nosotros.html" id="nosotros">Acerca de nosotros</a>
     </nav>
