@@ -41,7 +41,6 @@
         //Comprueba el número de filas que la consulta ha encontrado
         $n=mysqli_stmt_num_rows($consulta);
         if ($n!=1){
-            
             $http="Location: login.php?mensaje=".urlencode("Usuario o contraseña incorrecto");
             $http.="&validado=".urlencode("false");
             header($http);
@@ -80,6 +79,7 @@
         </div>
         <div>
             <h2>Bienvenido: <?=$usuario?></h2>
+            <a href="login.php">Cerrar sesión</a>
         </div>
 
     </header>
