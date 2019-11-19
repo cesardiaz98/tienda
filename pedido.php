@@ -1,4 +1,9 @@
 <?php    
+    //Mensaje en caso de error
+    $mensaje="";
+    if (isset($_GET['mensaje'])){
+            $mensaje=strip_tags(trim($_GET['mensaje']));
+    }
     //Seguridad
     include "../../seguridad/tema03/datosBDTienda.php";
 
@@ -20,7 +25,7 @@
     mysqli_stmt_execute($consulta);
     mysqli_stmt_bind_result($consulta, $precio, $stock, $idProducto, $nombreProducto);
     
-?>
+   ?>
 <!DOCTYPE html>
 <html>
    <head>
@@ -29,7 +34,7 @@
         <!--Paginas responsive-->
         <meta name="author" content="Cesar Diaz">
         <meta name="keywords" content="HTML, XHTML">
-        <link rel="stylesheet" type="text/css" href="estilos.css">
+        <link rel="stylesheet" type="text/css" href="pedido.css">
         <title>Tienda</title>
     </head>
     <body>
@@ -51,16 +56,49 @@
         <a href="nosotros.html" id="nosotros">Acerca de nosotros</a>
     </nav>
     <main>
-        <h2>Ticket</h2>
+        <div>
+            <h2>Ticket de compra:</h2>
+        </div>
+        <div>
+        <table border ="1">
+                <tr>
+                    
+                    <th>Nombre producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Precio productos</th>
+                </tr>
+        
+        <form action="finalizarCompra.php" method="post">
         <?php
+        
+        $precioFinal = 0;
                     while (mysqli_stmt_fetch($consulta)){
                        if (isset($_POST["cantidad$idProducto"]) && $_POST["cantidad$idProducto"]>0){
-                           echo $nombreProducto. '('.$_POST["cantidad$idProducto"].')'. ' Precio total: '.$precio*$_POST["cantidad$idProducto"] ;
+                           echo "<tr>";
+                           echo "<td>".$nombreProducto."</td><td>".$_POST["cantidad$idProducto"]."</td><td>$precio €</td><td>Precio total:".$precio*$_POST["cantidad$idProducto"]."€</td>";
+                           echo "</tr>";
+                           $precioFinal += $precio*$_POST["cantidad$idProducto"];
+                           
+                       } else if ($_POST["cantidad$idProducto"]<0){
+                           $http = "Location: productos.php?mensaje=".urlencode("La cantidad debe ser válida");
+                           header($http);
+                           exit;
                        }
+                       
                     }
+                       echo "<tr>";
+                       echo "<td>Precio final:$precioFinal</td>";
+                       echo "</tr>";
                     mysqli_stmt_close($consulta);
                     unset($consulta);
         ?>
+        </table>
+             <input type="submit" value="Confirmar compra">
+        </form>
+               
+        </div>
+       
     </main>
     <footer>
         <div>

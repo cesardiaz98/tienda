@@ -1,4 +1,9 @@
 <?php
+    //Mensaje en caso de error
+    $mensaje="";
+    if (isset($_GET['mensaje'])){
+            $mensaje=strip_tags(trim($_GET['mensaje']));
+    }
     //Seguridad
     include "../../seguridad/tema03/datosBDTienda.php";
 
@@ -45,6 +50,10 @@
                 <img src="imagenes/logo.png" alt="Logotipo tienda" />
             </a>
         </div>
+        <div>
+            <h2>Bienvenido/a</h2>
+            <a href="login.php">Cerrar sesión</a>
+        </div>
 
     </header>
     <nav>
@@ -59,6 +68,7 @@
         
         <article>
             <form action="pedido.php" method="post">
+                <p><?=$mensaje?></p>
             <table border ="1">
                 <tr>
                     <th>Nombre producto</th>
@@ -79,6 +89,7 @@
                 ?>
                 
             </table>
+                
                 <input type="submit" value="Añadir al carrito" onclick="confirm ('¿Desea añadirlo al carrito?')">
             </form>
         </article>

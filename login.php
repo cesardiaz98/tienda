@@ -9,7 +9,6 @@ $password="";
 if (isset($_GET['password'])){
 	$password=strip_tags(trim($_GET['password']));
 }
-
 //Mensaje en caso de error
 $mensaje="";
 if (isset($_GET['mensaje'])){

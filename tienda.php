@@ -1,8 +1,8 @@
 <?php    
     $validado = false;
     //Comprobación usuario
-    if ($validado == false){
-            $usuario="";
+    if($validado == false){
+        $usuario="";
         if(isset($_POST['usuario'])){
             $usuario=strip_tags(trim($_POST['usuario']));
         }
@@ -10,10 +10,9 @@
         $password="";
         if(isset($_POST['password'])){
             $password=strip_tags(trim($_POST['password']));
-        } 
-    }
+        }
     
-   if ($validado == true){
+   
     //Seguridad
         include "../../seguridad/tema03/datosBDTienda.php";
         //Vamos a conectarnos a la base de datos
@@ -52,10 +51,10 @@
             header($http);
             exit;
         } 
-        $http="Location: tienda.php?validado=true&usuario=$usuario";
-        header($http);
-        
+    
     }
+        
+    
      
     
 ?>

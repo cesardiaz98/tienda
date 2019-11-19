@@ -1,4 +1,4 @@
- body {
+body {
     font-family: Times New Roman, Helvética, sans-serif;
 }
 
@@ -25,10 +25,7 @@ img{
     width: 100%;
     height: auto;
 }
-p{
-    text-align: center;
-    color:black;
-}
+
 /************************HEADER**********************/
 header {
     display: flex;
@@ -89,44 +86,15 @@ nav {
    background-color:cadetblue;
 
 }
-
-/*********************MAIN************************/
+/********************MAIN***********************/
 main {
     display: flex;
-    justify-content: space-between;
+    justify-content:center;
 
 }
 
-.seccion {
-    display: inline-block;
-    max-width: 100%;
-    vertical-align: text-top;
-    margin: 0.5em;
-    flex-basis: 33%;
-}
-
-section {
-    display: inline-block;
-    align-content: center;
-    vertical-align: text-top;
-    margin: 1em;
-}
-
-section p{
-    text-align: center;
-    
-}
-
-#centro {
-    border-right: 1px solid grey;
-    border-left: 1px solid grey;
-}
-
-img{
-    width: 100%;
-    height: auto;
-}
 table{
+    align-self: center;
     border: 1px ;
 }
 tr:nth-child(even){
