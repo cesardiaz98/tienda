@@ -90,6 +90,7 @@ nav {
 main {
     display: flex;
     justify-content:center;
+    
 
 }
 
@@ -106,6 +107,7 @@ th, td{
 th{
     font-size: 1em;
 }
+
 
 
 /*********************FOOTER*************************/

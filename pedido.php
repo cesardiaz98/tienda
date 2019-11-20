@@ -1,4 +1,4 @@
-<?php    
+<?php   
     //Mensaje en caso de error
     $mensaje="";
     if (isset($_GET['mensaje'])){
@@ -24,6 +24,7 @@
     
     mysqli_stmt_execute($consulta);
     mysqli_stmt_bind_result($consulta, $precio, $stock, $idProducto, $nombreProducto);
+   
     
    ?>
 <!DOCTYPE html>
@@ -45,7 +46,7 @@
             </a>
         </div>
         <div>
-            <h2>Bienvenido: </h2>
+            <h2>Bienvenido/a: <?=$_COOKIE['usuario']?></h2>
             <a href="login.php">Cerrar sesión</a>
         </div>
 
@@ -69,7 +70,7 @@
                     <th>Precio productos</th>
                 </tr>
         
-        <form action="finalizarCompra.php" method="post">
+        
         <?php
         
         $precioFinal = 0;
@@ -94,8 +95,7 @@
                     unset($consulta);
         ?>
         </table>
-             <input type="submit" value="Confirmar compra">
-        </form>
+             
                
         </div>
        

@@ -1,4 +1,5 @@
 <?php
+
     //Mensaje en caso de error
     $mensaje="";
     if (isset($_GET['mensaje'])){
@@ -51,7 +52,7 @@
             </a>
         </div>
         <div>
-            <h2>Bienvenido/a</h2>
+            <h2>Bienvenido/a: <?=$_COOKIE['usuario']?></h2> 
             <a href="login.php">Cerrar sesión</a>
         </div>
 
@@ -66,7 +67,7 @@
             <h1>Productos</h1>
         </div>
         
-        <article>
+        <div>
             <form action="pedido.php" method="post">
                 <p><?=$mensaje?></p>
             <table border ="1">
@@ -80,19 +81,22 @@
                 <?php
                     while (mysqli_stmt_fetch($consulta)){
                         echo "<tr>";
-                        echo "<td>$nombreProducto</td><td><img src='".$imagen."'/><td>$descripcion</td><td>".$precio."€</td><td><input type='number' name='cantidad$idProducto' max='".$cantidad."' min=0/></td>";
+                        echo "<td>$nombreProducto</td><td><img src='".$imagen."'/><td>$descripcion</td><td>".$precio."€</td><td><input type='number' name='cantidad$idProducto' max='".$cantidad."' min='0'/></td>";
                         echo "</tr>";
                         
                     }
                     mysqli_stmt_close($consulta);
                     unset($consulta);
+                  
                 ?>
                 
             </table>
-                
-                <input type="submit" value="Añadir al carrito" onclick="confirm ('¿Desea añadirlo al carrito?')">
+                <div>
+                     <input type="submit" value="Añadir al carrito" onclick="confirm ('¿Desea añadirlo al carrito?')">
+                </div>
+               
             </form>
-        </article>
+        </div>
     </main>
     <footer>
         <div>

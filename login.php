@@ -4,6 +4,12 @@ $usuario="";
 if (isset($_GET['usuario'])){
     $usuario= strip_tags(trim($_GET['usuario']));
 }
+if (!empty($usuario)){
+            $http="Location: tienda.php";
+            header($http);
+            exit;
+ }
+
 //Comprobamos la contraseña
 $password="";
 if (isset($_GET['password'])){
@@ -14,9 +20,10 @@ $mensaje="";
 if (isset($_GET['mensaje'])){
 	$mensaje=strip_tags(trim($_GET['mensaje']));
 }
- 
-?>
 
+//Borrar antes de iniciar sesión
+setcookie('usuario',$usuario, time()-3600);
+?>
 <!DOCTYPE html>
 <html>
 

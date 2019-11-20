@@ -68,6 +68,7 @@ div img{
 nav {
     display: flex;
     justify-content: space-around;
+    
 }
 
 #inicio,
@@ -94,7 +95,7 @@ nav {
 main {
     display: flex;
     justify-content: space-between;
-
+    
 }
 
 .seccion {
@@ -137,6 +138,11 @@ th, td{
 }
 th{
     font-size: 1em;
+}
+input{
+   
+    margin-top: 0.5em;
+    padding: 0.5em;
 }
 
 

@@ -1,11 +1,11 @@
 <?php    
-    $validado = false;
+    
     //Comprobación usuario
-    if($validado == false){
-        $usuario="";
+
+     $usuario="";
         if(isset($_POST['usuario'])){
             $usuario=strip_tags(trim($_POST['usuario']));
-        }
+        } 
         //Comprobación contraseña
         $password="";
         if(isset($_POST['password'])){
@@ -41,21 +41,19 @@
         $n=mysqli_stmt_num_rows($consulta);
         if ($n!=1){
             $http="Location: login.php?mensaje=".urlencode("Usuario o contraseña incorrecto");
-            $http.="&validado=".urlencode("false");
+            $http.="&usuario=$usuario";
             header($http);
             exit;
         } else if (empty($usuario) or empty($password)){
-         
             $http="Location: login.php?mensaje=".urlencode("Alguno de los datos están vacíos");
-            $http.="&validado=".urlencode("false");
+            $http.="&usuario=pipas";
             header($http);
             exit;
         } 
-    
-    }
+        //Guarda el usuario 
+        setcookie('usuario',$usuario);
         
-    
-     
+
     
 ?>
 <!DOCTYPE html>
@@ -78,12 +76,13 @@
         </div>
         <div>
             <h2>Bienvenido: <?=$usuario?></h2>
-            <a href="login.php">Cerrar sesión</a>
+            
+            <a href="login.php">Cerrar sesión </a>
         </div>
 
     </header>
     <nav>
-        <a href="tienda.php?validado=true&usuario="<?=$usuario?> id="inicio">Inicio</a>
+        <a href="tienda.php?usuario="<?=$usuario?> id="inicio">Inicio</a>
         <a href="productos.php" id="productos">Productos</a>
         <a href="nosotros.html" id="nosotros">Acerca de nosotros</a>
     </nav>
