@@ -52,7 +52,6 @@
         } 
         //Guarda el usuario 
         setcookie('usuario',$usuario);
-        
 
     
 ?>

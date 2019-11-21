@@ -4,16 +4,15 @@ use tienda;
 grant all on tienda.* to tienda;
 --
 CREATE TABLE usuarios(
-  idUsuario int PRIMARY KEY not null,
-  usuario varchar(50) not null,
+  usuario varchar(50) primary key,
   password varchar(50) not null
   
 ) engine =innodb;
 
-INSERT INTO usuarios VALUES (1,'cesardiaz','hola123');
-INSERT INTO usuarios VALUES (2,'miguelgar','adios123');
-INSERT INTO usuarios VALUES (3,'olgaes','a123456');
-INSERT INTO usuarios VALUES (4,'mariad','a654321');
+INSERT INTO usuarios VALUES ('cesardiaz','hola123');
+INSERT INTO usuarios VALUES ('miguelgar','adios123');
+INSERT INTO usuarios VALUES ('olgaes','a123456');
+INSERT INTO usuarios VALUES ('mariad','a654321');
 
 create table productos(
    idProducto int primary key NOT NULL,

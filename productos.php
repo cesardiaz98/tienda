@@ -40,9 +40,7 @@
         <meta name="keywords" content="HTML, XHTML">
         <link rel="stylesheet" type="text/css" href="estilos.css">
         <title>Productos</title>
-        <style>
-            
-        </style>
+       
     </head>
     <body>
     <header>
@@ -92,7 +90,7 @@
                 
             </table>
                 <div>
-                     <input type="submit" value="Añadir al carrito" onclick="confirm ('¿Desea añadirlo al carrito?')">
+                     <input type="submit" value="Finalizar compra" onclick="confirm ('¿Desea realizar la compra?')">
                 </div>
                
             </form>

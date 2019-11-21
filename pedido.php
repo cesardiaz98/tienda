@@ -24,8 +24,8 @@
     
     mysqli_stmt_execute($consulta);
     mysqli_stmt_bind_result($consulta, $precio, $stock, $idProducto, $nombreProducto);
-   
-    
+
+   $usuario = $_COOKIE['usuario'];
    ?>
 <!DOCTYPE html>
 <html>
@@ -75,30 +75,32 @@
         
         $precioFinal = 0;
                     while (mysqli_stmt_fetch($consulta)){
-                       if (isset($_POST["cantidad$idProducto"]) && $_POST["cantidad$idProducto"]>0){
+                        $cantidadProducto = $_POST["cantidad$idProducto"]; 
+                       if (isset($cantidadProducto) && $cantidadProducto>0){
                            echo "<tr>";
-                           echo "<td>".$nombreProducto."</td><td>".$_POST["cantidad$idProducto"]."</td><td>$precio €</td><td>Precio total:".$precio*$_POST["cantidad$idProducto"]."€</td>";
+                           echo "<td>".$nombreProducto."</td><td>$cantidadProducto</td><td>$precio €</td><td>Precio total:".$precio*$cantidadProducto. "€</td>";
                            echo "</tr>";
-                           $precioFinal += $precio*$_POST["cantidad$idProducto"];
-                           
-                       } else if ($_POST["cantidad$idProducto"]<0){
-                           $http = "Location: productos.php?mensaje=".urlencode("La cantidad debe ser válida");
-                           header($http);
-                           exit;
-                       }
+                           $precioFinal += $precio*$cantidadProducto;
+                        //Canal para que no de error y podamos hacer otra consulta
+                        $canal2 = @mysqli_connect(IP,USUARIO,CLAVE,BD); 
+                        $insertar = "insert into compran (cantidadProducto, fecha, idProducto, idUsuario, precio_total) values ($cantidadProducto, currdate(), $idProducto, $usuario , $precioFinal)";
+                        $consulta2 = mysqli_prepare($canal2, $insertar);
+                     
+                        mysqli_stmt_execute($consulta2);
+                        
+                       } 
                        
                     }
                        echo "<tr>";
-                       echo "<td>Precio final:$precioFinal</td>";
+                       echo "<td>Precio final:$precioFinal €</td>";
                        echo "</tr>";
                     mysqli_stmt_close($consulta);
                     unset($consulta);
         ?>
-        </table>
-             
-               
+        </table>         
         </div>
-       
+        
+        <p><?=$insertar?></p>
     </main>
     <footer>
         <div>
