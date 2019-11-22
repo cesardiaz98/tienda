@@ -16,7 +16,7 @@ INSERT INTO usuarios VALUES ('mariad','a654321');
 
 create table productos(
    idProducto int primary key NOT NULL,
-   cantidad numeric(7,2) NOT NULL,
+   cantidad int NOT NULL,
    precio float(7,2),
    nombreProducto varchar(50) NOT NULL,
    descripcion text not null
@@ -29,6 +29,7 @@ INSERT INTO productos VALUES (3,'150','500','Samsung galaxy S10', 'El Galaxy S10
 INSERT INTO productos VALUES (4,'180','600','Samsung galaxy S10+', 'El Samsung Galaxy S10+ es el más poderoso de la serie Galaxy S10. Con una pantalla AMOLED QHD+ de 6.4 pulgadas, el Galaxy S10+ está potenciado por el procesador Exynos 9820 octa-core o Snapdragon 855, con opciones de 6GB o 12GB de RAM y 128GB, 512GB o 1TB de almacenamiento.');
 
 create table compran (
+    cantidadProducto int not null,	
     idCompra int AUTO_INCREMENT,
     idProducto int not null,
     idUsuario int not null,

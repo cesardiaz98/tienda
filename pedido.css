@@ -89,12 +89,10 @@ nav {
 /********************MAIN***********************/
 main {
     display: flex;
-    justify-content:center;
-    
-
+    justify-content: space-between;
 }
-
 table{
+    
     align-self: center;
     border: 1px ;
 }

@@ -58,7 +58,7 @@
     <nav>
         <a href="tienda.php" id="inicio">Inicio</a>
         <a href="productos.php" id="productos">Productos</a>
-        <a href="nosotros.html" id="nosotros">Acerca de nosotros</a>
+        <a href="nosotros.php" id="nosotros">Acerca de nosotros</a>
     </nav>
     <main>
         <div>

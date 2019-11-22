@@ -6,7 +6,6 @@
     }
     //Seguridad
     include "../../seguridad/tema03/datosBDTienda.php";
-
     //Vamos a conectarnos a la base de datos
     $canal = @mysqli_connect(IP,USUARIO,CLAVE,BD);
     if (!$canal){
@@ -25,6 +24,7 @@
     mysqli_stmt_execute($consulta);
     mysqli_stmt_bind_result($consulta, $precio, $stock, $idProducto, $nombreProducto);
 
+    //Cookie para pasar el usuario
    $usuario = $_COOKIE['usuario'];
    ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@
     <nav>
         <a href="tienda.php" id="inicio">Inicio</a>
         <a href="productos.php" id="productos">Productos</a>
-        <a href="nosotros.html" id="nosotros">Acerca de nosotros</a>
+        <a href="nosotros.php" id="nosotros">Acerca de nosotros</a>
     </nav>
     <main>
         <div>
@@ -81,26 +81,54 @@
                            echo "<td>".$nombreProducto."</td><td>$cantidadProducto</td><td>$precio €</td><td>Precio total:".$precio*$cantidadProducto. "€</td>";
                            echo "</tr>";
                            $precioFinal += $precio*$cantidadProducto;
+                           
                         //Canal para que no de error y podamos hacer otra consulta
                         $canal2 = @mysqli_connect(IP,USUARIO,CLAVE,BD); 
-                        $insertar = "insert into compran (cantidadProducto, fecha, idProducto, idUsuario, precio_total) values ($cantidadProducto, currdate(), $idProducto, $usuario , $precioFinal)";
+                        $insertar = "insert into compran (cantidadProducto, fecha, idProducto, idUsuario, precio_total) values ($cantidadProducto, CURRENT_DATE, $idProducto, '$usuario' , $precioFinal)";
                         $consulta2 = mysqli_prepare($canal2, $insertar);
-                     
                         mysqli_stmt_execute($consulta2);
                         
-                       } 
+                        //Cantidad es la tabla de productos y es la tabla que vamos a modificar
+                        $actualizar = "update productos set cantidad = $stock - $cantidadProducto where idProducto = $idProducto";
+                        $consulta3 = mysqli_prepare($canal2, $actualizar);
+                        mysqli_stmt_execute($consulta3);
+                        
+                        //Comprobamos que haya stock suficiente
+                        if($stock<$cantidadProducto){
+                            mysqli_rollback($canal2);
+                            $http="Location: productos.php?mensaje=".urlencode("No hay stock suficiente");
+                            header($http);
+                            exit;
+                        }
+                        //Con esta comprobación , si hay un error, la consulta no se ejecuta y lo devuelve.
+                        if(!mysqli_stmt_execute($consulta3)){
+                            mysqli_rollback($canal2);
+                            $http="Location: productos.php?mensaje=".urlencode("Error al descontar la cantidad");
+                            header($http);
+                            exit;
+                        }
+                    } 
                        
+                      
                     }
+                        //Cerramos todas las consultas realizadas
+                        mysqli_stmt_close($consulta);
+                        unset($consulta);
+                        mysqli_stmt_close($consulta2);
+                        unset($consulta2);
+                        mysqli_stmt_close($consulta3);
+                        unset($consulta3);
+                        //Imprimimos el precio final
                        echo "<tr>";
                        echo "<td>Precio final:$precioFinal €</td>";
                        echo "</tr>";
-                    mysqli_stmt_close($consulta);
-                    unset($consulta);
+                       
+                       
+                    
         ?>
         </table>         
         </div>
-        
-        <p><?=$insertar?></p>
+            <p>¡Gracias por su compra!</p>
     </main>
     <footer>
         <div>

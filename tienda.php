@@ -1,7 +1,6 @@
 <?php    
     
     //Comprobación usuario
-
      $usuario="";
         if(isset($_POST['usuario'])){
             $usuario=strip_tags(trim($_POST['usuario']));
@@ -11,7 +10,6 @@
         if(isset($_POST['password'])){
             $password=strip_tags(trim($_POST['password']));
         }
-    
    
     //Seguridad
         include "../../seguridad/tema03/datosBDTienda.php";
@@ -83,7 +81,7 @@
     <nav>
         <a href="tienda.php?usuario="<?=$usuario?> id="inicio">Inicio</a>
         <a href="productos.php" id="productos">Productos</a>
-        <a href="nosotros.html" id="nosotros">Acerca de nosotros</a>
+        <a href="nosotros.php" id="nosotros">Acerca de nosotros</a>
     </nav>
     <main>
         <section class="seccion" id="izquierda">
