@@ -35,7 +35,7 @@
         <!--Paginas responsive-->
         <meta name="author" content="Cesar Diaz">
         <meta name="keywords" content="HTML, XHTML">
-        <link rel="stylesheet" type="text/css" href="pedido.css">
+        <link rel="stylesheet" type="text/css" href="css/pedido.css">
         <title>Tienda</title>
     </head>
     <body>
@@ -59,9 +59,7 @@
     <main>
         <div>
             <h2>Ticket de compra:</h2>
-        </div>
-        <div>
-        <table border ="1">
+            <table border ="1">
                 <tr>
                     
                     <th>Nombre producto</th>
@@ -78,15 +76,23 @@
                         $cantidadProducto = $_POST["cantidad$idProducto"]; 
                        if (isset($cantidadProducto) && $cantidadProducto>0){
                            echo "<tr>";
-                           echo "<td>".$nombreProducto."</td><td>$cantidadProducto</td><td>$precio €</td><td>Precio total:".$precio*$cantidadProducto. "€</td>";
+                           echo "<td>".$nombreProducto."</td><td>$cantidadProducto</td>"
+                                   . "<td>$precio €</td><td>Precio total:".$precio*$cantidadProducto. "€</td>";
                            echo "</tr>";
                            $precioFinal += $precio*$cantidadProducto;
                            
                         //Canal para que no de error y podamos hacer otra consulta
                         $canal2 = @mysqli_connect(IP,USUARIO,CLAVE,BD); 
-                        $insertar = "insert into compran (cantidadProducto, fecha, idProducto, idUsuario, precio_total) values ($cantidadProducto, CURRENT_DATE, $idProducto, '$usuario' , $precioFinal)";
+                        $insertar = "insert into compran (cantidadProducto, fecha, idProducto, idUsuario, precio_total)"
+                                . " values ($cantidadProducto, CURRENT_DATE, $idProducto, '$usuario' , $precioFinal)";
                         $consulta2 = mysqli_prepare($canal2, $insertar);
                         mysqli_stmt_execute($consulta2);
+                        
+                        //Si hay un error en la consulta2, mostrará un mensaje de error
+                        if (!$consulta2){
+                            echo "Ha ocurrido el error: ".mysqli_errno($canal2)." ".mysqli_error($canal2)."<br />";
+                            exit;
+                        }
                         
                         //Cantidad es la tabla de productos y es la tabla que vamos a modificar
                         $actualizar = "update productos set cantidad = $stock - $cantidadProducto where idProducto = $idProducto";
@@ -107,9 +113,7 @@
                             header($http);
                             exit;
                         }
-                    } 
-                       
-                      
+                        }
                     }
                         //Cerramos todas las consultas realizadas
                         mysqli_stmt_close($consulta);
@@ -126,9 +130,20 @@
                        
                     
         ?>
-        </table>         
+        </table>
+            <h3>¡Gracias por su compra!</h3>
+            <a href = "productos.php">Realizar otra compra</a>
         </div>
-            <p>¡Gracias por su compra!</p>
+        
+           
+       
+       
+                 
+        
+        
+            
+        
+            
     </main>
     <footer>
         <div>

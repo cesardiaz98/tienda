@@ -1,4 +1,4 @@
- body {
+body {
     font-family: Times New Roman, Helvética, sans-serif;
 }
 
@@ -14,16 +14,16 @@ h6 {
 
 /*Todos los párrafos de la página tendrán fuente de color gris negro.*/
 
-a {
-    text-align: center;
+#enlace {
+    margin:0.5em;
+    flex-basis: 50%;
+    align-content: flex-end;
+    
 }
 
 h2 {
+    margin:0.5em;
     text-align: center;
-}
-img{
-    width: 100%;
-    height: auto;
 }
 p{
     text-align: center;
@@ -37,26 +37,24 @@ header {
     background-color: cadetblue;
 
 }
-
-form {
-
-    align-self: center;
-    align-content: flex-end;
-
-}
-
 #logo{
-    align-content: center;
+    align-content: flex-start;
     flex-basis: 50%;
     
 }
+form {
+    align-self: center;
+    align-content: flex-end;
+}
+
+
 
 #formulario{
     align-content: flex-end;
     flex-basis: 50%;
     align-self: center;
 }
-div img{
+img{
     width: 100%;
     height: auto;
 }
@@ -90,45 +88,26 @@ nav {
    background-color:cadetblue;
 
 }
-
-/*********************MAIN************************/
-main {
+/*********************MAIN***************************/
+main{
     display: flex;
-    justify-content: space-between;
-    
-}
-
-.seccion {
-    display: inline-block;
-    max-width: 100%;
-    vertical-align: text-top;
-    margin: 0.5em;
-    flex-basis: 33%;
-}
-
-section {
-    display: inline-block;
-    align-content: center;
-    vertical-align: text-top;
-    margin: 1em;
-}
-
-section p{
+    justify-content: center;
     text-align: center;
-    
 }
-
-#centro {
-    border-right: 1px solid grey;
-    border-left: 1px solid grey;
-}
-
 img{
     width: 100%;
     height: auto;
 }
+form{
+    display: inline-block;
+    width: 80%;
+    height: auto;
+}
 table{
-    border: 1px ;
+    text-align: center;
+    align-self: center;
+    margin-top: 0.5em;
+    border: 1px;
 }
 tr:nth-child(even){
     background-color: lightgrey;
@@ -139,10 +118,13 @@ th, td{
 th{
     font-size: 1em;
 }
-input{
-   
-    margin-top: 0.5em;
+#compra{
+    align-items: center;
+    margin: 0.5em;
     padding: 0.5em;
+}
+h1{
+    text-align: center;
 }
 
 

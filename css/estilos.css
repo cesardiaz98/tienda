@@ -1,0 +1,148 @@
+ body {
+    font-family: Times New Roman, Helvética, sans-serif;
+}
+
+/* Todas las cabeceras (h1, h2, etc.) de la página tendrán fuente Times New Roman, o de la familia Times, o en su defecto con serifa.*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Times New Roman, Times, serif;
+}
+
+/*Todos los párrafos de la página tendrán fuente de color gris negro.*/
+
+#enlace {
+    margin:0.5em;
+    flex-basis: 50%;
+    align-content: flex-end;
+    
+}
+
+h2 {
+    margin:0.5em;
+    text-align: center;
+}
+p{
+    text-align: center;
+    color:black;
+}
+/************************HEADER**********************/
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: cadetblue;
+
+}
+#logo{
+    align-content: flex-start;
+    flex-basis: 50%;
+    
+}
+form {
+    align-self: center;
+    align-content: flex-end;
+}
+
+
+
+#formulario{
+    align-content: flex-end;
+    flex-basis: 50%;
+    align-self: center;
+}
+img{
+    width: 100%;
+    height: auto;
+}
+
+
+
+
+/*********************NAV*************************/
+nav {
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+#inicio,
+#productos,
+#nosotros {
+    display: inline-block;
+    width: 100%;
+    border: 1px solid white;
+    text-align: center;
+    background-color: cadetblue;
+    text-decoration: none;
+    color: black;
+
+}
+
+#inicio:hover,
+#productos:hover,
+#nosotros:hover {
+   background-color:cadetblue;
+
+}
+
+/*********************MAIN************************/
+main {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    
+}
+
+.seccion {
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: text-top;
+    margin: 0.5em;
+    flex-basis: 33%;
+}
+
+section {
+    display: inline-block;
+    align-content: center;
+    vertical-align: text-top;
+    margin: 1em;
+}
+
+section p{
+    text-align: center;
+    
+}
+
+#centro {
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+}
+
+
+
+
+/*********************FOOTER*************************/
+footer {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid black;
+    background-color: cadetblue;
+}
+
+footer p {
+    color: black;
+
+}
+
+footer img {
+    width: 20px;
+    height: 20px;
+}
+
+footer a {
+    margin-bottom: 1em;
+}

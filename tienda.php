@@ -48,6 +48,10 @@
             header($http);
             exit;
         } 
+        
+        //Cerramos la consulta
+        mysqli_stmt_close($consulta);
+        mysqli_close($canal);
         //Guarda el usuario 
         setcookie('usuario',$usuario);
 
@@ -61,7 +65,7 @@
         <!--Paginas responsive-->
         <meta name="author" content="Cesar Diaz">
         <meta name="keywords" content="HTML, XHTML">
-        <link rel="stylesheet" type="text/css" href="estilos.css">
+        <link rel="stylesheet" type="text/css" href="css/estilos.css">
         <title>Tienda</title>
     </head>
     <body>
@@ -73,8 +77,7 @@
         </div>
         <div>
             <h2>Bienvenido: <?=$usuario?></h2>
-            
-            <a href="login.php">Cerrar sesión </a>
+            <a href="login.php" id="enlace">Cerrar sesión </a>
         </div>
 
     </header>

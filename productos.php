@@ -38,7 +38,7 @@
         <!--Paginas responsive-->
         <meta name="author" content="Cesar Diaz">
         <meta name="keywords" content="HTML, XHTML">
-        <link rel="stylesheet" type="text/css" href="estilos.css">
+        <link rel="stylesheet" type="text/css" href="css/productos.css">
         <title>Productos</title>
        
     </head>
@@ -50,7 +50,7 @@
             </a>
         </div>
         <div>
-            <h2>Bienvenido/a: <?=$_COOKIE['usuario']?></h2> 
+            <h2>Bienvenido/a: <?=$_COOKIE['usuario']?></h2>
             <a href="login.php">Cerrar sesión</a>
         </div>
 
@@ -63,9 +63,6 @@
     <main>
         <div>
             <h1>Productos</h1>
-        </div>
-        
-        <div>
             <form action="pedido.php" method="post">
                 <p><?=$mensaje?></p>
             <table border ="1">
@@ -79,7 +76,9 @@
                 <?php
                     while (mysqli_stmt_fetch($consulta)){
                         echo "<tr>";
-                        echo "<td>$nombreProducto</td><td><img src='".$imagen."'/><td>$descripcion</td><td>".$precio."€</td><td><input type='number' name='cantidad$idProducto' max='".$cantidad."' min='0'/></td>";
+                        echo "<td>$nombreProducto</td><td><img src='".$imagen."'/>"
+                                . "<td>$descripcion</td><td>".$precio."€</td>"
+                                . "<td><input type='number' name='cantidad$idProducto' max='".$cantidad."' min='0'/></td>";
                         echo "</tr>";
                         
                     }
@@ -90,10 +89,12 @@
                 
             </table>
                 <div>
-                     <input type="submit" value="Finalizar compra" onclick="confirm ('¿Desea realizar la compra?')">
+                     <input id="compra" type="submit" value="Finalizar compra" onclick="confirm ('¿Desea realizar la compra?')">
                 </div>
                
             </form>
+       
+            
         </div>
     </main>
     <footer>

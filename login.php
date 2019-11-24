@@ -1,25 +1,26 @@
 <?php
-//Comprobamos el usuario
-$usuario="";
-if (isset($_GET['usuario'])){
-    $usuario= strip_tags(trim($_GET['usuario']));
-}
-if (!empty($usuario)){
-            $http="Location: tienda.php";
-            header($http);
-            exit;
- }
 
-//Comprobamos la contraseña
-$password="";
-if (isset($_GET['password'])){
-	$password=strip_tags(trim($_GET['password']));
-}
-//Mensaje en caso de error
-$mensaje="";
-if (isset($_GET['mensaje'])){
-	$mensaje=strip_tags(trim($_GET['mensaje']));
-}
+    if (!empty($usuario) && !empty($password)){
+                $http="Location: tienda.php";
+                header($http);
+                exit;
+     }
+    //Comprobamos el usuario
+    $usuario="";
+    if (isset($_GET['usuario'])){
+        $usuario= strip_tags(trim($_GET['usuario']));
+    }
+
+    //Comprobamos la contraseña
+    $password="";
+    if (isset($_GET['password'])){
+            $password=strip_tags(trim($_GET['password']));
+    }
+    //Mensaje en caso de error
+    $mensaje="";
+    if (isset($_GET['mensaje'])){
+            $mensaje=strip_tags(trim($_GET['mensaje']));
+    }
 
 //Borrar antes de iniciar sesión
 setcookie('usuario',$usuario, time()-3600);
@@ -33,7 +34,7 @@ setcookie('usuario',$usuario, time()-3600);
     <!--Paginas responsive-->
     <meta name="author" content="Cesar Diaz">
     <meta name="keywords" content="HTML, XHTML">
-    <link rel="stylesheet" type="text/css" href="formulario.css">
+    <link rel="stylesheet" type="text/css" href="css/formulario.css">
     <title>Tienda</title>
     
 </head>

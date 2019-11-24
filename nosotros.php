@@ -6,7 +6,7 @@
         <!--Paginas responsive-->
         <meta name="author" content="Cesar Diaz">
         <meta name="keywords" content="HTML, XHTML">
-        <link rel="stylesheet" type="text/css" href="estilos.css">
+        <link rel="stylesheet" type="text/css" href="css/estilos.css">
         <title>Tienda</title>
     </head>
     <body>
