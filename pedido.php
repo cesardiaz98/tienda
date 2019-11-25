@@ -74,7 +74,11 @@
         $precioFinal = 0;
                     while (mysqli_stmt_fetch($consulta)){
                         $cantidadProducto = $_POST["cantidad$idProducto"]; 
-                       if (isset($cantidadProducto) && $cantidadProducto>0){
+                        if (empty($cantidadProducto)){
+                            $cantidadProducto=0;
+                            
+                         }   
+                       else if (isset($cantidadProducto) && $cantidadProducto>0){
                            echo "<tr>";
                            echo "<td>".$nombreProducto."</td><td>$cantidadProducto</td>"
                                    . "<td>$precio €</td><td>Precio total:".$precio*$cantidadProducto. "€</td>";
@@ -84,7 +88,7 @@
                         //Canal para que no de error y podamos hacer otra consulta
                         $canal2 = @mysqli_connect(IP,USUARIO,CLAVE,BD); 
                         $insertar = "insert into compran (cantidadProducto, fecha, idProducto, idUsuario, precio_total)"
-                                . " values ($cantidadProducto, CURRENT_DATE, $idProducto, '$usuario' , $precioFinal)";
+                                . " values ($cantidadProducto, CURRENT_DATE, $idProducto, '$usuario' , $precio*$cantidadProducto)";
                         $consulta2 = mysqli_prepare($canal2, $insertar);
                         mysqli_stmt_execute($consulta2);
                         
@@ -113,21 +117,23 @@
                             header($http);
                             exit;
                         }
-                        }
-                    }
                         //Cerramos todas las consultas realizadas
-                        mysqli_stmt_close($consulta);
-                        unset($consulta);
+                        
                         mysqli_stmt_close($consulta2);
                         unset($consulta2);
                         mysqli_stmt_close($consulta3);
                         unset($consulta3);
+                        }
+                    }
+                    //Cerramos la primera consulta
+                        mysqli_stmt_close($consulta);
+                        unset($consulta);
                         //Imprimimos el precio final
                        echo "<tr>";
                        echo "<td>Precio final:$precioFinal €</td>";
                        echo "</tr>";
                        
-                       
+                   
                     
         ?>
         </table>
